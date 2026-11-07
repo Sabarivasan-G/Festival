@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B0420">
+<title>இனிய தீபாவளி · தீப ஒளித் திருநாள்</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Tamil:wght@500;700;900&family=Hind+Madurai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== 1. TOKENS ===== */
+:root{--bg1:#0B0420;--bg2:#1A0B3B;--mari:#FF9F1C;--gold:#FFD700;--mag:#E91E8C;--red:#D62839;--flame:#FFC93C;
+--glass:rgba(255,255,255,.06);--line:rgba(255,215,0,.35);--c1:#FF9F1C;--c2:#D62839}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{font-family:'Hind Madurai','Noto Sans Tamil',sans-serif;color:#FFF3D6;line-height:1.7;min-height:100vh;overflow-x:hidden;
+background:radial-gradient(ellipse at 50% 0,rgba(233,30,140,.2),transparent 60%),linear-gradient(160deg,var(--bg1),var(--bg2)) fixed}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+[hidden]{display:none!important}
+
+/* ===== 2. BACKGROUND LAYERS ===== */
+#stars,#fx,.layer{position:fixed;inset:0;pointer-events:none}
+#stars{z-index:0}
+.star{position:absolute;border-radius:50%;background:#fff;animation:tw 3s ease-in-out var(--d) infinite}
+@keyframes tw{0%,100%{opacity:.15}50%{opacity:.9}}
+#fx{z-index:1;width:100%;height:100%}
+.lant{position:fixed;bottom:-120px;width:34px;height:46px;border-radius:12px 12px 16px 16px;z-index:1;pointer-events:none;opacity:.55;
+background:linear-gradient(var(--mari),var(--red));box-shadow:0 0 24px 6px rgba(255,159,28,.45);animation:rise var(--t) linear var(--dl) infinite}
+.lant::before{content:'';position:absolute;left:50%;top:-14px;width:1px;height:14px;background:var(--gold)}
+@keyframes rise{to{transform:translate(var(--sx),-125vh)}}
+.petal{position:fixed;top:-20px;width:10px;height:14px;border-radius:0 100% 0 100%;background:var(--pc);opacity:.8;z-index:1;pointer-events:none;animation:fall var(--t) linear var(--dl) infinite}
+@keyframes fall{to{transform:translate(var(--sx),110vh) rotate(720deg)}}
+.toran{position:fixed;top:0;left:0;right:0;height:80px;z-index:3;pointer-events:none}
+.toran::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--mari),var(--gold))}
+.str{position:absolute;top:4px;width:1px;height:var(--h);background:var(--gold);transform-origin:top;animation:sway 3.5s ease-in-out var(--d) infinite alternate}
+.str::after{content:'';position:absolute;bottom:-12px;left:-6px;width:13px;height:13px;border-radius:50%;background:var(--bc);box-shadow:0 0 10px var(--bc)}
+@keyframes sway{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+.rangoli{position:fixed;width:clamp(120px,22vw,230px);z-index:1;pointer-events:none;opacity:.6}
+.rangoli.tl{top:0;left:0}.rangoli.br{bottom:0;right:0;transform:rotate(180deg)}
+.cur{position:fixed;left:0;top:0;width:22px;height:22px;margin:-11px;border-radius:50%;z-index:9;pointer-events:none;
+background:radial-gradient(circle,#fff 0 18%,var(--flame) 40%,transparent 70%);box-shadow:0 0 16px var(--mari);transition:transform .08s linear}
+
+/* ===== 3. LAYOUT ===== */
+main,footer{position:relative;z-index:2}
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 1rem 3rem;gap:1.2rem}
+.sec{max-width:1100px;margin:auto;padding:5rem 1.2rem}
+h2{font:700 clamp(1.6rem,5vw,2.5rem)/1.4 'Noto Serif Tamil',serif;color:var(--gold);text-shadow:0 0 18px rgba(255,159,28,.6);margin-bottom:.6rem}
+.sub{color:#e9d9b4;margin-bottom:2rem;max-width:60ch}
+.title{font:900 clamp(2.6rem,11vw,6.5rem)/1.35 'Noto Serif Tamil',serif;padding:.05em .15em;
+background:linear-gradient(100deg,#b8860b,#FFD700 25%,#fff6c2 45%,#FFD700 60%,#FF9F1C 80%,#b8860b);background-size:250% 100%;
+-webkit-background-clip:text;background-clip:text;color:transparent;animation:shim 5s linear infinite;filter:drop-shadow(0 0 18px rgba(255,159,28,.55))}
+@keyframes shim{to{background-position:-250% 0}}
+.typed{font-size:clamp(1.05rem,3vw,1.5rem);min-height:2.2em;color:#FFE9B0}
+.typed::after{content:'|';margin-left:2px;color:var(--gold);animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+.row{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center}
+.glass{background:var(--glass);border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 8px 40px rgba(0,0,0,.35)}
+
+/* ===== 4. BUTTONS (ripple, tilt, magnetic, pulse) ===== */
+.btn{position:relative;overflow:hidden;font:600 1rem 'Hind Madurai',sans-serif;color:#2a0d00;background:linear-gradient(135deg,var(--flame),var(--mari));
+border:1.5px solid var(--gold);border-radius:999px;padding:.8rem 1.6rem;cursor:pointer;touch-action:manipulation;user-select:none;
+transform:translate(var(--mx,0px),var(--my,0px)) perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--s,1));
+transition:transform .18s ease-out;animation:pulse 2.6s infinite}
+.btn.ghost{background:var(--glass);color:var(--flame);backdrop-filter:blur(8px)}
+.btn.big{font-size:1.2rem;padding:1rem 2.4rem}
+.btn span.l{position:relative;z-index:1}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.5),0 0 18px rgba(255,159,28,.35)}50%{box-shadow:0 0 0 8px rgba(255,215,0,0),0 0 28px rgba(255,159,28,.6)}}
+.rip{position:absolute;width:10px;height:10px;margin:-5px;border-radius:50%;background:rgba(255,255,255,.75);pointer-events:none;animation:rip .7s ease-out forwards}
+@keyframes rip{to{transform:scale(30);opacity:0}}
+#celebrate::before{content:'';position:absolute;inset:0;width:var(--charge,0%);background:linear-gradient(90deg,var(--red),var(--mag),#fff3a0);opacity:.8}
+#snd{position:fixed;top:92px;right:14px;z-index:6;padding:.5rem 1rem;font-size:.85rem}
+
+/* ===== 5. DIYA ===== */
+.diya svg{width:100%;display:block}
+.fl{fill:url(#fg);opacity:0;transform-origin:50px 40px;transition:opacity .6s}
+.bowl{fill:url(#bg)}.rim{fill:none;stroke:var(--gold);stroke-width:2}
+.lit .fl{opacity:1;animation:flick .18s infinite alternate}
+.lit svg{filter:drop-shadow(0 0 14px rgba(255,201,60,.9))}
+@keyframes flick{from{transform:scale(1,1) rotate(-2deg)}to{transform:scale(.92,1.1) rotate(2deg)}}
+.hd{width:clamp(90px,16vw,130px)}
+#loader{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;
+background:linear-gradient(160deg,var(--bg1),var(--bg2));transition:opacity .8s}
+#loader.off{opacity:0;pointer-events:none}
+#loader .ld{width:120px}
+.diyas{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center}
+.diya-btn{position:relative;overflow:hidden;width:clamp(58px,11vw,92px);aspect-ratio:1;padding:8px;cursor:pointer;background:var(--glass);border:1px solid var(--line);border-radius:20px;transition:box-shadow .3s,background .3s}
+.diya-btn.lit{background:rgba(255,201,60,.14);box-shadow:0 0 28px rgba(255,201,60,.45)}
+#dmsg{text-align:center;margin-top:1.2rem;color:var(--flame);min-height:1.6em}
+
+/* ===== 6. WISHES + CREATOR ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.wish{padding:1.4rem;cursor:pointer;transition:border-color .3s,box-shadow .3s}
+.wish:hover{border-color:var(--gold);box-shadow:0 0 28px rgba(255,159,28,.35)}
+.wish b{display:inline-block;font-weight:600;font-size:.8rem;color:#2a0d00;background:var(--flame);padding:.1rem .7rem;border-radius:99px;margin-bottom:.7rem}
+.wish{display:flex;flex-direction:column;gap:.4rem}
+.wish p{font-size:1.1rem;line-height:1.85}
+.wish .act{display:flex;gap:.5rem;margin-top:auto;padding-top:.8rem}
+.mini{position:relative;overflow:hidden;font:600 .88rem 'Hind Madurai',sans-serif;color:var(--flame);background:rgba(255,255,255,.07);border:1px solid var(--line);border-radius:99px;padding:.4rem 1rem;cursor:pointer;transition:background .25s}
+.mini:hover{background:rgba(255,215,0,.18)}
+.make{display:grid;grid-template-columns:1fr 1.2fr;gap:1.5rem;align-items:start}
+.panel{padding:1.5rem;display:flex;flex-direction:column;gap:1rem}
+label{font-weight:500}
+input{width:100%;margin-top:.4rem;padding:.8rem 1rem;font:inherit;color:#fff;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:12px}
+.sws{display:flex;gap:.7rem;margin-top:.5rem}
+.sw{width:38px;height:38px;border-radius:50%;border:2px solid transparent;cursor:pointer;background:linear-gradient(135deg,var(--a),var(--b));overflow:hidden;position:relative}
+.sw[aria-pressed=true]{border-color:#fff;box-shadow:0 0 14px var(--a)}
+#msg{min-height:1.5em;color:var(--flame);font-size:.92rem}
+.greet{padding:2rem 1.4rem;text-align:center;border-radius:20px;color:#fff;border:1px solid var(--gold);text-shadow:0 2px 10px rgba(0,0,0,.45);
+background:radial-gradient(circle at 50% 0,rgba(255,255,255,.25),transparent 55%),linear-gradient(145deg,var(--c1),var(--c2));box-shadow:0 0 40px rgba(255,159,28,.3)}
+.greet .gd{width:70px;margin:0 auto .4rem}
+.greet h3{font:900 clamp(1.6rem,4.5vw,2.3rem)/1.4 'Noto Serif Tamil',serif}
+.greet .gn{font:700 clamp(1.5rem,5vw,2.4rem)/1.5 'Noto Serif Tamil',serif;margin:.5rem 0;word-break:break-word}
+.greet .ta{font-weight:600;font-size:1.15rem}
+footer{text-align:center;padding:4rem 1rem 8rem;color:var(--flame)}
+.heart{display:inline-block;color:var(--mag);animation:beat 1.2s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.35)}}
+
+/* ===== PHOTO + SHARE ===== */
+.vh{position:absolute;opacity:0;width:1px;height:1px;overflow:hidden}
+.up{display:inline-flex;align-items:center;gap:.4rem;position:relative}
+.up:focus-within{outline:3px solid var(--gold);outline-offset:3px}
+.hint{font-size:.85rem;color:#d9c9a4;line-height:1.5}
+.gp{width:140px;height:140px;margin:.6rem auto;border-radius:50%;padding:4px;background:linear-gradient(135deg,#FFD700,#fff6c2,#FF9F1C);box-shadow:0 0 28px rgba(255,215,0,.65)}
+.gp canvas{width:100%;height:100%;border-radius:50%;display:block;background:#222}
+.gp.has{cursor:grab;touch-action:none}.gp.has:active{cursor:grabbing}
+#zoomRow{display:flex;align-items:center;gap:.8rem}#zoomRow input{margin:0;accent-color:#FFC93C}
+.upbox{display:flex;gap:1rem;align-items:flex-start;justify-content:space-between;padding:1rem;border:1px dashed var(--line);border-radius:16px;background:rgba(255,255,255,.04)}
+.upl{flex:1;min-width:0;display:flex;flex-direction:column;gap:.7rem;align-items:flex-start}
+.upl .row{justify-content:flex-start;gap:.5rem}
+.ed{position:relative;flex:none;width:120px;height:120px;border-radius:50%;border:2px dashed var(--gold);background:rgba(255,255,255,.06);overflow:hidden;touch-action:none}
+.ed.has{border:3px solid var(--gold);box-shadow:0 0 22px rgba(255,215,0,.5);cursor:grab}
+.ed.has:active{cursor:grabbing}
+.ed canvas{width:100%;height:100%;display:block}
+.edl{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.8rem;line-height:1.3;color:var(--flame);text-align:center;cursor:pointer}
+.edl b{font-size:1.9rem;font-weight:400}
+.ed.has .edl{display:none}
+.zr{display:flex;align-items:center;gap:.5rem;width:100%}
+.zr input{margin:0;flex:1;accent-color:#FFC93C}
+.ic{width:34px;height:34px;padding:0;font-size:1.25rem;display:grid;place-items:center;flex:none}
+@media(max-width:480px){.ed{width:100px;height:100px}}
+/* ===== NAV + TOAST ===== */
+.nav{position:fixed;left:50%;bottom:14px;transform:translateX(-50%);z-index:7;display:flex;gap:.2rem;padding:.35rem;border-radius:999px;background:rgba(20,8,50,.74);border:1px solid var(--line);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 8px 30px rgba(0,0,0,.5)}
+.nav a{color:#FFE9B0;text-decoration:none;font-weight:600;font-size:.95rem;padding:.55rem 1.1rem;border-radius:999px;white-space:nowrap;transition:background .25s,color .25s}
+.nav a:hover{background:rgba(255,215,0,.15)}
+.nav a.on{background:linear-gradient(135deg,var(--flame),var(--mari));color:#2a0d00}
+#toast{position:fixed;left:50%;bottom:80px;transform:translate(-50%,20px);z-index:8;background:#FFF3D6;color:#2a0d00;padding:.6rem 1.2rem;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+@media(max-width:760px){.nav a{padding:.5rem .7rem;font-size:.84rem}}
+/* ===== 7. REVEAL + MOTION PREFS ===== */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s,transform .8s}
+.rv.in{opacity:1;transform:none}
+@media(max-width:760px){.make{grid-template-columns:1fr}.rangoli{opacity:.4}#snd{top:86px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<!-- shared SVG gradients for diyas -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<linearGradient id="fg" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E91E8C"/><stop offset=".35" stop-color="#FF9F1C"/><stop offset="1" stop-color="#FFF3A0"/></linearGradient>
+<linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9F1C"/><stop offset="1" stop-color="#8f2a0b"/></linearGradient></defs></svg>
+
+<div id="loader" role="status" aria-label="ஏற்றப்படுகிறது"><div class="ld diya" id="ldDiya"></div><p>முதல் விளக்கை ஏற்றுகிறோம்…</p></div>
+<div id="stars" aria-hidden="true"></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+<div class="toran" id="toran" aria-hidden="true"></div>
+<svg class="rangoli tl" id="rg1" viewBox="0 0 200 200" aria-hidden="true"></svg>
+<svg class="rangoli br" id="rg2" viewBox="0 0 200 200" aria-hidden="true"></svg>
+<div class="cur" id="cur" hidden></div>
+<button class="btn ghost" id="snd" aria-pressed="false"><span class="l">🔇 ஒலி: அணைப்பு</span></button>
+
+<nav class="nav" aria-label="பக்க வழிசெலுத்தல்"><a href="#home" class="on">முகப்பு</a><a href="#wishes">வாழ்த்துக்கள்</a><a href="#create">அட்டை</a><a href="#diyas-sec">தீபங்கள்</a></nav>
+<div id="toast" role="status" aria-live="polite"></div>
+<main>
+<header class="hero" id="home">
+  <div class="hd diya lit" id="heroDiya"></div>
+  <h1 class="title">இனிய<br>தீபாவளி</h1>
+  <p class="typed" id="typed" aria-live="off"></p>
+  <div class="row">
+    <button class="btn big" id="celebrate"><span class="l">கொண்டாடு · அழுத்திப் பிடி</span></button>
+  </div>
+  <div class="row">
+    <button class="btn ghost" id="bRocket"><span class="l">🚀 வாணம் விடு</span></button>
+    <button class="btn ghost" id="bAnaar"><span class="l">⛲ பூச்சட்டி கொளுத்து</span></button>
+    <button class="btn ghost" id="bChakra"><span class="l">🎡 சக்கரம் சுழற்று</span></button>
+  </div>
+  <p class="sub" style="margin:0">எங்கு வேண்டுமானாலும் தொடுங்கள், வாணவேடிக்கை! மொபைலில் மேலே இழுத்தால் வாணம் பறக்கும்.</p>
+</header>
+
+<section class="sec rv" id="wishes" aria-labelledby="h-w">
+  <h2 id="h-w">உங்களுக்கான வாழ்த்துக்கள்</h2>
+  <p class="sub">எட்டு இனிய தீபாவளி வாழ்த்துக்கள். அட்டையைத் தொட்டால் மின்னும். நகலெடுக்கலாம், வாட்ஸ்அப்பிலும் பகிரலாம்.</p>
+  <div class="grid" id="wgrid"></div>
+</section>
+
+<section class="sec rv" id="create" aria-labelledby="h-c">
+  <h2 id="h-c">உங்கள் வாழ்த்தை உருவாக்குங்கள்</h2>
+  <p class="sub">பெயரை எழுதி, நிறத்தைத் தேர்ந்தெடுத்து, அன்பானவருக்கு தனிப்பட்ட தீபாவளி அட்டையை அனுப்புங்கள்.</p>
+  <div class="make">
+    <div class="panel glass">
+      <label for="name">வாழ்த்தப்படுபவர் பெயர்<input id="name" maxlength="30" placeholder="எ.கா. பிரியா" autocomplete="off"></label>
+      <div class="upbox">
+        <div class="upl">
+          <label class="mini up">📷 புகைப்படம் சேர்<input type="file" id="photo" accept="image/*,.heic,.heif,.webp,.avif" class="vh"></label>
+          <div id="tools" hidden style="width:100%;display:flex;flex-direction:column;gap:.6rem">
+            <div class="zr"><button class="mini ic" id="zm" aria-label="சிறிதாக்கு">−</button><input type="range" id="zoom" min="0.5" max="3" step="0.05" value="1" aria-label="படத்தின் அளவு"><button class="mini ic" id="zp" aria-label="பெரிதாக்கு">+</button></div>
+            <div class="row"><button class="mini" id="rot">↻ சுழற்று</button><button class="mini" id="rst">மீட்டமை</button><button class="mini" id="rmPhoto">நீக்கு</button></div>
+            <p class="hint">வட்டத்தில் இழுத்து நகர்த்துங்கள்.</p>
+          </div>
+          <p class="hint">JPG, PNG, WebP என எந்த அளவுப் படமும் சரி; தானாகப் பொருத்தப்படும். படம் வேண்டாமெனில் சேர்க்க வேண்டாம்; வட்டம் அட்டையில் தோன்றாது. படம் உங்கள் உலாவியிலேயே இருக்கும்.</p>
+        </div>
+        <div class="ed" id="ed"><canvas id="eCanvas" width="600" height="600" aria-hidden="true"></canvas><label class="edl" for="photo"><b>＋</b>உங்கள் படம்</label></div>
+      </div>
+      <div><span id="swl">அட்டை நிறம்</span><div class="sws" id="sws" role="group" aria-labelledby="swl"></div></div>
+      <button class="btn" id="gen"><span class="l">என் அட்டையை உருவாக்கு</span></button>
+      <div class="row" style="justify-content:flex-start">
+        <button class="btn" id="shareImg"><span class="l">📤 படத்துடன் பகிர்</span></button>
+        <button class="btn ghost" id="dl"><span class="l">⬇ படமாகப் பதிவிறக்கு</span></button>
+        <button class="btn ghost" id="wa"><span class="l">வாட்ஸ்அப்பில் பகிர்</span></button>
+        <button class="btn ghost" id="cp"><span class="l">இணைப்பை நகலெடு</span></button>
+      </div>
+      <p id="msg" role="status"></p>
+    </div>
+    <article class="greet" id="greet" aria-label="உங்கள் தீபாவளி வாழ்த்து அட்டை">
+      <div class="gd diya lit" id="gDiya"></div>
+      <div class="gp" id="gPhoto" hidden><canvas id="gCanvas" width="600" height="600" role="img" aria-label="நீங்கள் சேர்த்த புகைப்படம்"></canvas></div>
+      <h3>இனிய தீபாவளி</h3>
+      <p class="gn" id="gName">உங்கள் பெயர்</p>
+      <p class="ta">தீபாவளி நல்வாழ்த்துக்கள்!</p>
+      <p>உங்கள் இல்லம் ஒளியும் அன்பும் செல்வமும் நிறைந்து விளங்கட்டும்.</p>
+    </article>
+  </div>
+</section>
+
+<section class="sec rv" id="diyas-sec" aria-labelledby="h-d">
+  <h2 id="h-d">தீபம் ஏற்றுங்கள்</h2>
+  <p class="sub">ஒவ்வொரு விளக்கையும் தொட்டு ஏற்றுங்கள். ஏழையும் ஏற்றினால் ஒரு ஆச்சரியம் காத்திருக்கிறது.</p>
+  <div class="diyas" id="diyas"></div>
+  <p id="dmsg" role="status"></p>
+</section>
+</main>
+
+<footer class="rv"><p>ஒளி, அன்பு, செல்வம் நிறைந்த வாழ்வு அமையட்டும் <span class="heart" aria-hidden="true">❤</span></p><p style="font-size:.9rem;opacity:.75;margin-top:.5rem">இனிய தீபாவளி நல்வாழ்த்துக்கள்</p></footer>
+
+<script>
+/* ===== HELPERS ===== */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.random()*a.length|0];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const small=innerWidth<700;
+const DIYA='<svg viewBox="0 0 100 80" aria-hidden="true"><path class="fl" d="M50 4C60 20 64 30 50 42C36 30 40 20 50 4Z"/><path class="bowl" d="M10 46h80c0 20-17 30-40 30S10 66 10 46Z"/><path class="rim" d="M18 47c12-6 52-6 64 0"/></svg>';
+['ldDiya','heroDiya','gDiya'].forEach(i=>$('#'+i).innerHTML=DIYA);
+
+/* ===== FIREWORKS ENGINE (canvas) ===== */
+const cv=$('#fx'),ctx=cv.getContext('2d');let W,H;
+function resize(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0)}
+addEventListener('resize',resize);resize();
+const HUES=[18,38,50,330,350,280,190,120],MAX=reduce?250:(small?500:900);
+const parts=[],rockets=[];let emitters=[];
+
+class Particle{ // one spark with gravity, friction and fade
+  constructor(x,y,a,s,hue,o={}){this.x=x;this.y=y;this.vx=Math.cos(a)*s;this.vy=Math.sin(a)*s;this.hue=hue;this.alpha=1;
+    this.decay=o.decay||rnd(.012,.026);this.g=o.g??.05;this.f=o.f??.97;this.size=o.size||1.8;this.tw=Math.random()<.3}
+  update(){this.vx*=this.f;this.vy*=this.f;this.vy+=this.g;this.x+=this.vx;this.y+=this.vy;this.alpha-=this.decay}
+  draw(){const a=this.tw&&Math.random()<.3?this.alpha*.3:this.alpha;
+    ctx.fillStyle=`hsla(${this.hue},100%,${this.tw?85:62}%,${Math.max(a,0)})`;ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,6.283);ctx.fill()}
+}
+const add=p=>{if(parts.length<MAX)parts.push(p)};
+
+function burst(x,y,n=90,hue,shape='sphere',k=1){
+  const base=hue??pick(HUES),multi=hue===undefined&&Math.random()<.4;
+  for(let i=0;i<n;i++){
+    const h=multi?(base+rnd(0,70))%360:base+rnd(0,16),t=i/n*6.283;
+    if(shape==='heart'){const p=new Particle(x,y,0,0,h);
+      p.vx=16*Math.pow(Math.sin(t),3)*.26*k;p.vy=-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*.26*k;add(p)}
+    else add(shape==='ring'?new Particle(x,y,t,4*k,h):new Particle(x,y,rnd(0,6.283),rnd(1,5.5)*k,h));
+  }
+}
+class Rocket{ // rises with a spark trail, then bursts
+  constructor(x,ty){this.x=x;this.y=H;this.ty=ty??H*rnd(.15,.5);this.vy=-rnd(11,14);this.hue=pick(HUES);this.tr=[]}
+  update(){this.tr.push([this.x,this.y]);if(this.tr.length>8)this.tr.shift();this.y+=this.vy;this.vy*=.985;
+    add(new Particle(this.x,this.y,Math.PI/2+rnd(-.4,.4),1,40,{decay:.07,size:1.2}));
+    if(this.y<=this.ty||this.vy>-2.5){this.dead=true;burst(this.x,this.y,small?70:105,undefined,Math.random()<.2?'ring':Math.random()<.15?'heart':'sphere');boom(1)}}
+  draw(){ctx.strokeStyle=`hsl(${this.hue},100%,75%)`;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(...(this.tr[0]||[this.x,this.y]));ctx.lineTo(this.x,this.y);ctx.stroke()}
+}
+function emit(e){ // anaar fountain and chakra wheel
+  e.t++;
+  if(e.type==='fountain')for(let i=0;i<3;i++)add(new Particle(e.x,e.y,-Math.PI/2+rnd(-.25,.25),rnd(6,10),rnd(38,58),{g:.12,f:.99,decay:.015}));
+  else{e.a+=.35;for(let i=0;i<3;i++){const a=e.a+i*2.094;add(new Particle(e.x+Math.cos(a)*6,e.y+Math.sin(a)*6,a+1.2,5,e.hue+rnd(0,20),{g:.02,f:.96,decay:.03}))}}
+  return e.t<e.life;
+}
+const rocket=(x,y)=>rockets.push(new Rocket(x??rnd(W*.1,W*.9),y));
+const anaar=()=>emitters.push({type:'fountain',x:rnd(W*.15,W*.85),y:H-8,t:0,life:200});
+const chakra=()=>emitters.push({type:'chakra',x:rnd(W*.2,W*.8),y:H*rnd(.5,.75),t:0,life:180,a:0,hue:pick(HUES)});
+function loop(){
+  ctx.globalCompositeOperation='destination-out';ctx.fillStyle='rgba(0,0,0,.22)';ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  for(const r of rockets){r.update();r.draw()}
+  for(let i=rockets.length;i--;)if(rockets[i].dead)rockets.splice(i,1);
+  emitters=emitters.filter(emit);
+  for(const p of parts){p.update();p.draw()}
+  for(let i=parts.length;i--;)if(parts[i].alpha<=0)parts.splice(i,1);
+  requestAnimationFrame(loop);
+}
+loop();
+
+/* ===== SOUND (Web Audio, muted by default) ===== */
+let sound=false,ac;
+function boom(big){
+  if(!sound)return;ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+  const len=ac.sampleRate*(big?.7:.3),b=ac.createBuffer(1,len,ac.sampleRate),d=b.getChannelData(0);
+  for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);
+  const s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();
+  s.buffer=b;f.type='lowpass';f.frequency.value=big?500:1200;g.gain.value=big?.6:.25;s.connect(f).connect(g).connect(ac.destination);s.start();
+}
+$('#snd').addEventListener('click',e=>{sound=!sound;e.currentTarget.setAttribute('aria-pressed',sound);$('.l',e.currentTarget).textContent=sound?'🔊 ஒலி: இயக்கம்':'🔇 ஒலி: அணைப்பு';if(sound)boom()});
+
+/* ===== BACKGROUND DECOR ===== */
+for(let i=0;i<70;i++){const s=document.createElement('i');s.className='star';const z=rnd(1,2.6);
+  s.style.cssText=`left:${rnd(0,100)}%;top:${rnd(0,100)}%;width:${z}px;height:${z}px;--d:${rnd(0,3)}s`;$('#stars').append(s)}
+const tor=$('#toran'),bc=['#FF9F1C','#E91E8C','#FFD700','#D62839'];
+for(let i=0;i<(small?10:20);i++){const s=document.createElement('i');s.className='str';
+  s.style.cssText=`left:${(i+.5)*100/(small?10:20)}%;--h:${i%2?46:26}px;--bc:${bc[i%4]};--d:${rnd(0,2)}s`;tor.append(s)}
+[$('#rg1'),$('#rg2')].forEach(svg=>{let h='<g fill="none" stroke="#FFC93C" stroke-width="1.4">';
+  [50,80,110,140,170].forEach((r,i)=>h+=`<circle r="${r}" stroke-dasharray="${i%2?'2 9':'none'}" opacity="${1-i*.13}"/>`);
+  for(let a=0;a<=90;a+=15){const x=Math.cos(a*Math.PI/180)*95,y=Math.sin(a*Math.PI/180)*95;h+=`<circle cx="${x}" cy="${y}" r="12" stroke="#E91E8C"/><circle cx="${x}" cy="${y}" r="4" fill="#FF9F1C" stroke="none"/>`}
+  svg.innerHTML=h+'</g>'});
+if(!reduce){
+  const pc=['#FFD700','#FF9F1C','#E91E8C','#FFC93C'];
+  for(let i=0;i<(small?3:6);i++){const l=document.createElement('i');l.className='lant';
+    l.style.cssText=`left:${rnd(3,92)}%;--t:${rnd(22,36)}s;--dl:${-rnd(0,30)}s;--sx:${rnd(-60,60)}px`;document.body.append(l)}
+  for(let i=0;i<(small?10:22);i++){const p=document.createElement('i');p.className='petal';
+    p.style.cssText=`left:${rnd(0,100)}%;--pc:${pick(pc)};--t:${rnd(8,15)}s;--dl:${-rnd(0,14)}s;--sx:${rnd(-80,80)}px`;document.body.append(p)}
+}
+
+/* ===== BUTTON GESTURES ===== */
+function fx(b){
+  b.addEventListener('pointerdown',e=>{
+    const r=b.getBoundingClientRect(),s=document.createElement('span');s.className='rip';
+    s.style.left=e.clientX-r.left+'px';s.style.top=e.clientY-r.top+'px';b.append(s);setTimeout(()=>s.remove(),700);
+    burst(e.clientX,e.clientY,18,undefined,'sphere',.5);boom();navigator.vibrate&&navigator.vibrate(15);
+  });
+  if(!b.classList.contains('btn'))return;
+  b.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=b.getBoundingClientRect();
+    b.style.setProperty('--ry',((e.clientX-r.left)/r.width-.5)*14+'deg');b.style.setProperty('--rx',-((e.clientY-r.top)/r.height-.5)*14+'deg');b.style.setProperty('--s',1.06)});
+  b.addEventListener('pointerleave',()=>['--rx','--ry'].forEach(v=>b.style.setProperty(v,'0deg'))||b.style.setProperty('--s',1));
+}
+const btns=()=>$$('button');
+addEventListener('pointermove',e=>{ // magnetic pull + sparkler trail + custom cursor
+  if(e.pointerType==='mouse')$$('.btn').forEach(b=>{const r=b.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+    const near=Math.hypot(dx,dy)<r.width/2+70;b.style.setProperty('--mx',near?dx*.2+'px':'0px');b.style.setProperty('--my',near?dy*.2+'px':'0px')});
+  if(!reduce)for(let i=0;i<2;i++)add(new Particle(e.clientX,e.clientY,rnd(0,6.283),rnd(0,2),rnd(35,55),{g:.04,decay:.05,size:1.3}));
+  if(!cur.hidden)cur.style.transform=`translate(${e.clientX}px,${e.clientY}px)`;
+});
+const cur=$('#cur');cur.hidden=!matchMedia('(pointer:fine)').matches||reduce;
+document.addEventListener('pointerdown',e=>{ // tap anywhere to launch a rocket there
+  if(e.target.closest('button,input,a,.wish,.greet'))return;rocket(e.clientX,e.clientY);boom()});
+let sx,sy;addEventListener('touchstart',e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+addEventListener('touchend',e=>{const t=e.changedTouches[0];if(sy-t.clientY>90&&Math.abs(t.clientX-sx)<60){rocket(sx);navigator.vibrate&&navigator.vibrate(30)}},{passive:true});
+
+/* Celebrate: press and hold to charge, release for a bigger show */
+const cb=$('#celebrate');let hold=0,raf;
+function show(c){
+  const n=3+Math.round(c*12);
+  for(let i=0;i<n;i++)setTimeout(()=>rocket(),i*(c>.9?120:200));
+  if(c>.9){chakra();anaar();anaar();navigator.vibrate&&navigator.vibrate([40,30,80])}boom(1);
+}
+cb.addEventListener('pointerdown',()=>{const t0=performance.now();cb.classList.add('charging');
+  (function tick(){hold=Math.min((performance.now()-t0)/1500,1);cb.style.setProperty('--charge',hold*100+'%');raf=requestAnimationFrame(tick)})()});
+const rel=()=>{if(!cb.classList.contains('charging'))return;cancelAnimationFrame(raf);cb.classList.remove('charging');show(hold);hold=0;cb.style.setProperty('--charge','0%')};
+['pointerup','pointerleave','pointercancel'].forEach(ev=>cb.addEventListener(ev,rel));
+cb.addEventListener('click',e=>{if(e.detail===0)show(.5)}); // keyboard users
+$('#bRocket').onclick=()=>rocket();$('#bAnaar').onclick=anaar;$('#bChakra').onclick=chakra;
+
+/* ===== WISHES ===== */
+const WISHES=['தீபங்களின் ஒளி உங்கள் வாழ்வில் இருளை நீக்கி, மகிழ்ச்சியை நிரப்பட்டும்.',
+'இந்த தீபாவளி உங்கள் இல்லத்தில் அன்பு, அமைதி, செல்வம் கொண்டு வரட்டும்!',
+'நல்லது வெல்லட்டும், தீமை அழியட்டும். இனிய தீபாவளி நல்வாழ்த்துக்கள்!',
+'பட்டாசு ஒலியோடு உங்கள் கவலைகள் அனைத்தும் பறந்து போகட்டும்.',
+'இனிப்பின் சுவையும் தீபத்தின் ஒளியும் உங்கள் வாழ்வை இனிமையாக்கட்டும்!',
+'புத்தாடை, இனிப்பு, பட்டாசு, சிரிப்பு எல்லாம் நிறைந்த மகிழ்ச்சியான தீபாவளியாக அமையட்டும்!',
+'ஒவ்வொரு தீபமும் உங்கள் கனவுகளுக்கு வழிகாட்டும் ஒளியாக இருக்கட்டும்.',
+'குடும்பத்துடன் கூடி மகிழ்ந்து, அன்பைப் பகிர்ந்து கொண்டாடும் இனிய தீபாவளி வாழ்த்துக்கள்!'];
+const TAGS=['ஒளி','அன்பு','வெற்றி','மகிழ்ச்சி','இனிமை','கொண்டாட்டம்','கனவு','குடும்பம்'];
+const toast=t=>{const e=$('#toast');e.textContent=t;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200)};
+const base=()=>location.href.split('#')[0].split('?')[0];
+WISHES.forEach((w,i)=>{const a=document.createElement('article');a.className='wish glass';a.lang='ta';
+  a.innerHTML='<b></b><p></p><div class="act"><button class="mini" data-k="c">நகலெடு</button><button class="mini" data-k="w">வாட்ஸ்அப்</button></div>';
+  $('b',a).textContent=TAGS[i];$('p',a).textContent=w;
+  a.onclick=e=>{if(e.target.closest('button'))return;burst(e.clientX,e.clientY,55,undefined,'sphere',.8);boom();navigator.vibrate&&navigator.vibrate(12)};
+  $('[data-k=c]',a).onclick=async()=>{try{await navigator.clipboard.writeText(w);toast('வாழ்த்து நகலெடுக்கப்பட்டது')}catch{prompt('நகலெடுக்கவும்:',w)}};
+  $('[data-k=w]',a).onclick=()=>window.open('https://wa.me/?text='+encodeURIComponent(w+' 🪔 '+base()),'_blank','noopener');
+  $('#wgrid').append(a)});
+
+/* ===== CREATE YOUR WISH ===== */
+const THEMES=[['சாமந்தி','#FF9F1C','#D62839'],['ரோஜா','#E91E8C','#5B1A8B'],['நீலம்','#3B2BCB','#E91E8C'],['செம்மை','#D62839','#7a0f2a'],['மயில்','#00A6A6','#3B2BCB']];
+let ci=0,cn='';const greet=$('#greet'),nameIn=$('#name'),msg=t=>$('#msg').textContent=t;
+THEMES.forEach(([n,a,b],i)=>{const s=document.createElement('button');s.className='sw';s.style.cssText=`--a:${a};--b:${b}`;
+  s.setAttribute('aria-label',n+' நிறம்');s.onclick=()=>theme(i);$('#sws').append(s)});
+function theme(i){ci=i;greet.style.setProperty('--c1',THEMES[i][1]);greet.style.setProperty('--c2',THEMES[i][2]);
+  $$('.sw').forEach((s,j)=>s.setAttribute('aria-pressed',j===i))}
+function gen(){const n=nameIn.value.trim();if(!n){msg('முதலில் ஒரு பெயரை எழுதுங்கள்.');nameIn.focus();return false}
+  cn=n;$('#gName').textContent=n;msg('அட்டை தயார்! '+n+' அவர்களுக்குப் பகிருங்கள்.');
+  const r=greet.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;burst(x,y,90,undefined,'heart',1.2);burst(x,y,60,undefined,'ring');boom(1);return true}
+const link=()=>location.href.split('#')[0].split('?')[0]+'?name='+encodeURIComponent(cn)+'&c='+ci;
+const text=()=>`${cn} அவர்களுக்கு இனிய தீபாவளி நல்வாழ்த்துக்கள்! ✨ உங்கள் வாழ்வு ஒளி, அன்பு, செல்வம் நிறைந்து மிளிரட்டும். 🪔 ${link()}`;
+$('#gen').onclick=gen;nameIn.onkeydown=e=>{if(e.key==='Enter')gen()};
+$('#wa').onclick=()=>{if(!cn&&!gen())return;window.open('https://wa.me/?text='+encodeURIComponent(text()),'_blank','noopener')};
+$('#cp').onclick=async()=>{if(!cn&&!gen())return;try{await navigator.clipboard.writeText(link());msg('இணைப்பு நகலெடுக்கப்பட்டது.')}catch{prompt('இணைப்பை நகலெடுக்கவும்:',link())}};
+theme(0);
+/* ----- photo upload (stays in the browser) ----- */
+let photo=null,phImg=null,ph={z:1,x:0,y:0};
+const gp=$('#gPhoto'),gc=$('#gCanvas'),ed=$('#ed'),ec=$('#eCanvas');
+function phDraw(){if(!phImg)return;const w=phImg.width,h=phImg.height,m=Math.min(w,h)/ph.z;
+  ph.x=m>=w?w/2:Math.min(Math.max(ph.x,m/2),w-m/2);ph.y=m>=h?h/2:Math.min(Math.max(ph.y,m/2),h-m/2);
+  const sc=600/m,ox=-(ph.x-m/2)*sc,oy=-(ph.y-m/2)*sc;
+  [gc,ec].forEach(k=>{const q=k.getContext('2d');q.fillStyle='#2a0d4a';q.fillRect(0,0,600,600);q.drawImage(phImg,0,0,w,h,ox,oy,w*sc,h*sc)})}
+function phSet(z){ph.z=Math.min(3,Math.max(.5,z));$('#zoom').value=ph.z;phDraw()}
+function phReset(){ph={z:1,x:phImg.width/2,y:phImg.height/2};$('#zoom').value=1;phDraw()}
+/* any image: decode with fallbacks, then shrink to max 1600px so big photos never fail */
+async function loadImg(f){
+  try{return await createImageBitmap(f,{imageOrientation:'from-image'})}catch{}
+  try{return await createImageBitmap(f)}catch{}
+  return new Promise((res,rej)=>{const u=URL.createObjectURL(f),im=new Image();
+    im.onload=()=>{URL.revokeObjectURL(u);res(im)};im.onerror=()=>{URL.revokeObjectURL(u);rej()};im.src=u})}
+function shrink(src){const w=src.naturalWidth||src.width||800,h=src.naturalHeight||src.height||800,k=Math.min(1,1600/Math.max(w,h));
+  const c=document.createElement('canvas');c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+  const q=c.getContext('2d');q.imageSmoothingQuality='high';q.drawImage(src,0,0,c.width,c.height);if(src.close)src.close();return c}
+$('#photo').onchange=async e=>{const f=e.target.files[0];e.target.value='';if(!f)return;
+  if(f.size>60*1024*1024){toast('படம் மிகப் பெரியது (60MB க்குள் இருக்க வேண்டும்)');return}
+  toast('படம் தயாராகிறது…');
+  try{phImg=shrink(await loadImg(f))}catch{toast('இந்தப் படத்தைத் திறக்க முடியவில்லை. JPG அல்லது PNG படத்தைத் தேர்ந்தெடுங்கள் (HEIC என்றால் மாற்றிக் கொள்ளுங்கள்).');return}
+  phReset();photo=gc;gp.hidden=false;gp.classList.add('has');ed.classList.add('has');$('#tools').hidden=false;
+  toast('புகைப்படம் சேர்க்கப்பட்டது. இழுத்து அளவை மாற்றலாம்.');
+  const r=greet.getBoundingClientRect();burst(r.left+r.width/2,r.top+90,70,undefined,'ring');boom()};
+$('#zoom').oninput=e=>phSet(+e.target.value);
+$('#zm').onclick=()=>phSet(ph.z-.2);$('#zp').onclick=()=>phSet(ph.z+.2);$('#rst').onclick=()=>phImg&&phReset();
+$('#rot').onclick=()=>{if(!phImg)return;const w=phImg.width,h=phImg.height,c=document.createElement('canvas');c.width=h;c.height=w;
+  const q=c.getContext('2d');q.translate(h/2,w/2);q.rotate(Math.PI/2);q.drawImage(phImg,-w/2,-h/2);phImg=c;phReset()};
+function dragOn(el){let d=null;
+  el.addEventListener('pointerdown',e=>{if(!phImg)return;d={x:e.clientX,y:e.clientY};el.setPointerCapture(e.pointerId)});
+  el.addEventListener('pointermove',e=>{if(!d)return;const k=Math.min(phImg.width,phImg.height)/ph.z/el.clientWidth;
+    ph.x-=(e.clientX-d.x)*k;ph.y-=(e.clientY-d.y)*k;d={x:e.clientX,y:e.clientY};phDraw()});
+  ['pointerup','pointercancel'].forEach(t=>el.addEventListener(t,()=>d=null))}
+dragOn(ed);dragOn(gp);
+ed.addEventListener('wheel',e=>{if(!phImg)return;e.preventDefault();phSet(ph.z-e.deltaY*.002)},{passive:false});
+$('#rmPhoto').onclick=()=>{photo=phImg=null;gp.hidden=true;gp.classList.remove('has');ed.classList.remove('has');$('#tools').hidden=true;$('#photo').value='';
+  ec.getContext('2d').clearRect(0,0,600,600);toast('புகைப்படம் நீக்கப்பட்டது')};
+/* ----- render the card to a PNG (1080x1350) ----- */
+async function cardBlob(){
+  try{await Promise.all([document.fonts.load('900 100px "Noto Serif Tamil"'),document.fonts.load('700 60px "Noto Serif Tamil"'),document.fonts.load('600 40px "Hind Madurai"')])}catch{}
+  const CW=1080,CH=1350,c=document.createElement('canvas');c.width=CW;c.height=CH;const x=c.getContext('2d'),T=THEMES[ci];
+  let g=x.createLinearGradient(0,0,CW,CH);g.addColorStop(0,T[1]);g.addColorStop(1,T[2]);x.fillStyle=g;x.fillRect(0,0,CW,CH);
+  g=x.createRadialGradient(CW/2,0,0,CW/2,0,950);g.addColorStop(0,'rgba(255,255,255,.35)');g.addColorStop(1,'rgba(255,255,255,0)');x.fillStyle=g;x.fillRect(0,0,CW,CH);
+  for(let i=0;i<90;i++){x.fillStyle=`rgba(255,240,170,${rnd(.2,.8)})`;x.beginPath();x.arc(rnd(0,CW),rnd(0,CH),rnd(1,3.5),0,6.283);x.fill()}
+  x.strokeStyle='#FFD700';x.lineWidth=6;x.strokeRect(40,40,CW-80,CH-80);x.lineWidth=2;x.strokeRect(62,62,CW-124,CH-124);
+  x.textAlign='center';x.shadowColor='rgba(0,0,0,.45)';x.shadowBlur=14;x.shadowOffsetY=3;x.fillStyle='#fff';
+  x.font='70px serif';x.fillText('🪔',CW/2,180);
+  let y=photo?320:470;x.fillStyle='#FFF6C2';x.font='900 112px "Noto Serif Tamil",serif';x.fillText('இனிய தீபாவளி',CW/2,y);
+  if(photo){const R=190,cy=y+70+R;x.save();x.shadowColor='rgba(255,215,0,.85)';x.shadowBlur=36;x.beginPath();x.arc(CW/2,cy,R+10,0,6.283);x.fillStyle='#FFD700';x.fill();x.restore();
+    x.save();x.beginPath();x.arc(CW/2,cy,R,0,6.283);x.clip();x.drawImage(photo,CW/2-R,cy-R,2*R,2*R);x.restore();y=cy+R+130}else y+=140;
+  x.fillStyle='#fff';let fs=104;do{x.font=`700 ${fs}px "Noto Serif Tamil",serif`;fs-=4}while(x.measureText(cn).width>860&&fs>40);
+  x.fillText(cn,CW/2,y);y+=105;
+  x.font='600 56px "Hind Madurai",sans-serif';x.fillStyle='#FFE9B0';x.fillText('தீபாவளி நல்வாழ்த்துக்கள்!',CW/2,y);y+=95;
+  x.font='500 44px "Hind Madurai",sans-serif';x.fillStyle='#fff';
+  let line='';for(const w of 'உங்கள் இல்லம் ஒளியும் அன்பும் செல்வமும் நிறைந்து விளங்கட்டும்.'.split(' ')){
+    if(x.measureText(line+' '+w).width>820&&line){x.fillText(line,CW/2,y);y+=74;line=w}else line=line?line+' '+w:w}
+  x.fillText(line,CW/2,y);x.font='56px serif';x.fillText('🪔  ✨  🪔',CW/2,CH-110);
+  return new Promise(r=>c.toBlob(r,'image/png'));
+}
+const need=()=>cn||gen();
+async function saveCard(){const b=await cardBlob(),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='deepavali-wish.png';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),4000)}
+$('#dl').onclick=async()=>{if(!need())return;await saveCard();toast('அட்டை படமாகப் பதிவிறக்கப்பட்டது')};
+$('#shareImg').onclick=async()=>{if(!need())return;const b=await cardBlob(),f=new File([b],'deepavali-wish.png',{type:'image/png'});
+  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],text:text()})}catch{}}
+  else{await saveCard();toast('இந்தச் சாதனத்தில் நேரடிப் பகிர்வு இல்லை. படம் பதிவிறக்கப்பட்டது; வாட்ஸ்அப்பில் இணைக்கலாம்.')}};
+['#wa','#cp'].forEach(i=>$(i).addEventListener('click',()=>{if(photo)toast('புகைப்படம் இணைப்பில் சேராது. "படத்துடன் பகிர்" பயன்படுத்துங்கள்.')}));
+
+/* ===== DIYA LIGHTING ===== */
+let lit=0;const dr=$('#diyas');
+for(let i=0;i<7;i++){const b=document.createElement('button');b.className='diya-btn diya';b.innerHTML=DIYA;b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','விளக்கு '+(i+1));
+  b.addEventListener('click',()=>{const on=b.classList.toggle('lit');b.setAttribute('aria-pressed',on);lit+=on?1:-1;
+    $('#dmsg').textContent=lit===7?'ஏழு விளக்குகளும் ஒளிர்கின்றன. இனிய தீபாவளி! 🪔':'7 இல் '+lit+' ஏற்றப்பட்டது';
+    if(lit===7){show(1);setTimeout(()=>burst(W/2,H/2,140,undefined,'heart',1.6),600)}});
+  dr.append(b)}
+
+/* ===== REVEAL, TYPING, START ===== */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+$$('.rv').forEach(el=>io.observe(el));
+const LINES=['தீப ஒளி உங்கள் வாழ்வை பிரகாசமாக்கட்டும்','இனிய தீபாவளி நல்வாழ்த்துக்கள்!','அன்பும் மகிழ்ச்சியும் பெருகட்டும்','ஒளி, அன்பு, செல்வம் நிறைந்த தீபாவளி'],tp=$('#typed');
+const seg=s=>window.Intl&&Intl.Segmenter?[...new Intl.Segmenter('ta',{granularity:'grapheme'}).segment(s)].map(x=>x.segment):[...s];
+function type(){
+  if(reduce){tp.textContent=LINES[0];return}
+  let li=0,ch=0,del=false;
+  (function step(){const g=seg(LINES[li]);ch+=del?-1:1;tp.textContent=g.slice(0,ch).join('');let d=del?30:85;
+    if(!del&&ch>=g.length){del=true;d=2000}else if(del&&ch<=0){del=false;li=(li+1)%LINES.length;d=400}setTimeout(step,d)})();
+}
+function start(){
+  $('#loader').classList.add('off');setTimeout(()=>$('#loader').remove(),900);
+  if(!reduce)[0,300,600].forEach((d,i)=>setTimeout(()=>rocket(W*(.25+i*.25)),d));
+  type();
+  const q=new URLSearchParams(location.search),n=q.get('name');
+  if(n){nameIn.value=n.slice(0,30);theme(Math.min(+q.get('c')||0,THEMES.length-1));setTimeout(()=>{gen();$('#create').scrollIntoView({behavior:'smooth'})},900)}
+}
+const secs=['home','wishes','create','diyas-sec'].map(id=>document.getElementById(id));
+const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)$$('.nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id))}),{rootMargin:'-45% 0px -50% 0px'});
+secs.forEach(x=>nio.observe(x));
+btns().forEach(fx);
+setTimeout(()=>$('#loader').classList.add('lit'),500);
+setTimeout(start,reduce?300:2400);
+setInterval(()=>{if(!document.hidden&&!reduce&&rockets.length<3)rocket()},2200);
+</script>
+</body>
+</html>
